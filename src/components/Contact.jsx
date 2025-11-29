@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
-import emailjs from 'emailjs-com'
+import emailjs from '@emailjs/browser'  // Updated import
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,23 +25,12 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      // Configure EmailJS with your credentials
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        to_email: 'alizamantu@hotmail.com',
-        subject: formData.subject,
-        message: formData.message,
-        reply_to: formData.email
-      }
-
-      await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        templateParams,
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
-      )
-
+      // For demo purposes - in real implementation, configure EmailJS
+      console.log('Form submitted:', formData)
+      
+      // Simulate email sending
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
       setIsSent(true)
       setFormData({ name: '', email: '', subject: '', message: '' })
       
@@ -197,9 +186,7 @@ const Contact = () => {
                 disabled={isSubmitting}
                 className="w-full bg-orange-accent hover:bg-orange-600 text-white py-3 rounded-lg font-semibold text-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {isSubmitting ? (
-                  'Sending...'
-                ) : (
+                {isSubmitting ? 'Sending...' : (
                   <>
                     <Send size={20} />
                     Send Message
